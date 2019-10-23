@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount KioskLock::Engine => "/kiosk_lock"
+  mount PseudoKiosk::Engine => "/pseudo_kiosk"
 end

@@ -1,4 +1,4 @@
-module KioskLock
+module PseudoKiosk
   module Config
     class << self
       # accepts a lambda function or string

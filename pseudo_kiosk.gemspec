@@ -1,17 +1,17 @@
 $:.push File.expand_path("lib", __dir__)
 
 # Maintain your gem's version:
-require "kiosk_lock/version"
+require "pseudo_kiosk/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
-  spec.name        = "kiosk_lock"
-  spec.version     = KioskLock::VERSION
+  spec.name        = "pseudo_kiosk"
+  spec.version     = PseudoKiosk::VERSION
   spec.authors     = ["Jonathan Chan"]
   spec.email       = ["jc@jmccc.com"]
-  spec.homepage    = "https://github.com/jonmchan/kiosk_lock"
-  spec.summary     = "KioskLock locks application access to a whitelist during a user session"
-  spec.description = "KioskLock locks the application to an endpoint or endpoints for allowing unprivileged users to utilize a kiosk during a workflow"
+  spec.homepage    = "https://github.com/jonmchan/pseudo_kiosk"
+  spec.summary     = "PseudoKiosk provides the ability to lock down a rails application to only a specified whitelist of endpoints during a session."
+  spec.description = "PseudoKiosk gives the ability to limit access to the application during workflows which involve physically passing a device with elevated permissions to an unknown or untrusted user."
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

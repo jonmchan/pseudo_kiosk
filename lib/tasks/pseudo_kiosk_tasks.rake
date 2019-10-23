@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :kiosk_lock do
+# task :pseudo_kiosk do
 #   # Task goes here
 # end

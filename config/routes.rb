@@ -1,2 +1,2 @@
-KioskLock::Engine.routes.draw do
+PseudoKiosk::Engine.routes.draw do
 end
