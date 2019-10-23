@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.summary     = "PseudoKiosk provides the ability to lock down a rails application to only a specified whitelist of endpoints during a session."
   spec.description = "PseudoKiosk gives the ability to limit access to the application during workflows which involve physically passing a device with elevated permissions to an unknown or untrusted user."
   spec.license     = "MIT"
-  spec.required_ruby_version = '~> 2.5.0'
+  spec.required_ruby_version = '>= 2.5.0'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
