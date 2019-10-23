@@ -4,6 +4,7 @@ module PseudoKiosk
     def self.included(klass)
       klass.class_eval do
         include InstanceMethods
+      end
       #Config.update!
       #Config.configure!
     end
@@ -12,7 +13,7 @@ module PseudoKiosk
       # To be used in before_action in the application_controller.
       # If pseudo_kiosk enabled, all endpoints that are not in the kiosk_whitelist 
       # will not allowed to be accessed
-      def ensure_pseudo_kiosk
+      def secure_pseudo_kiosk
         #  this needs to go to the unlock screen
         if session[:pseudo_kiosk_enabled]
           # TODO: need to follow lock_kiosk logic
@@ -62,3 +63,5 @@ module PseudoKiosk
         session.delete(:pseudo_kiosk_unlock_redirect_url)
       end
     end
+  end
+end
