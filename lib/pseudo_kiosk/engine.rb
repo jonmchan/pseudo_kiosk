@@ -1,5 +1,6 @@
 module PseudoKiosk
   class Engine < ::Rails::Engine
+    #config.pseudo_kiosk = PseudoKiosk::Config
     # Do we need this for what we're doing?
     # isolate_namespace PseudoKiosk
 

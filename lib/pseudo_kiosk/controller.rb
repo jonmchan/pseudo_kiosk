@@ -16,8 +16,28 @@ module PseudoKiosk
       def secure_pseudo_kiosk
         #  this needs to go to the unlock screen
         if session[:pseudo_kiosk_enabled]
-          # TODO: need to follow lock_kiosk logic
-          redirect_to "http://endoftheinternet.com/"
+          whitelist = Array.new(session[:pseudo_kiosk_whitelist])
+
+          # had difficulty getting the paths. If we can ever fix it, it would 
+          # make the next line of code prettier.
+          whitelist += [ PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path, PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_process_submit_path ]
+
+          whitelist.each do |allowed_url| 
+            if allowed_url.is_a? Regexp
+              return if allowed_url =~ request.env['PATH_INFO']
+            else
+              return if allowed_url == request.env['PATH_INFO']
+            end
+          end
+
+          # need to either redirect to unauthorized_endpoint_redirect_url or allow user to break out
+          if session[:pseudo_kiosk_unauthorized_endpoint_redirect_url].nil?
+            session[:pseudo_kiosk_unlock_redirect_url] = request.env['PATH_INFO']
+            
+            redirect_to(pseudo_kiosk_engine.routes.url_helpers.authentication_unlock_path)
+          else
+            redirect_to(session[:pseudo_kiosk_unauthorized_endpoint_redirect_url])
+          end
         end
       end
 
@@ -49,9 +69,8 @@ module PseudoKiosk
         # for no further operations to be done in the whitelist area
         session.delete(:pseudo_kiosk_whitelist)
 
+        redirect_to(pseudo_kiosk_engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path)
       end
-
-
 
       # clear all pseudo_kiosk session variables; this is an internal function
       # Most likely pseudo_kiosk_exit is what should be used, unless there is some usecase
