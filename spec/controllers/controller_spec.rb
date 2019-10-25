@@ -68,7 +68,7 @@ describe TestWorkFlowController, type: :controller do
     end
     context 'when pseudo_kiosk is disabled' do
       # can only test 1 single endpoint here because of controller spec limitation,
-      # the expanded tests will be in the request spec.
+      # the expanded tests are in the core_functions request spec.
 
       before do
         session[:pseudo_kiosk_enabled] = nil
@@ -81,35 +81,10 @@ describe TestWorkFlowController, type: :controller do
       end
     end
 
-      # endpoints = { 
-      #   test_work_flow_start_step1_privilege_path => true,
-      #   test_work_flow_complete_step1_privilege_path => true,
-      #   test_work_flow_start_step2_unprivilege_path => true,
-      #   test_work_flow_complete_step2_privilege_path => true,
-      #   test_work_flow_start_step3_privilege_path => true,
-      #   test_work_flow_complete_step3_privilege_path => true,
-      #  }
-      # endpoints.each do |endpoint, opened_endpoint|
-      #   if opened_endpoint
-      #   else
-      #   end
-      # end
-
     # check request spec folder for whitelist tests;
     # need to utilize ability to simulate multiple http requests
+
     # describe 'whitelist tests' do end
-    describe 'whitelist tests' do
-      context 'single string' do
-
-      end
-      context 'regex expression' do
-
-      end
-
-      context 'multiple items' do
-
-      end
-    end
   end
 
   describe '#pseudo_kiosk_start' do

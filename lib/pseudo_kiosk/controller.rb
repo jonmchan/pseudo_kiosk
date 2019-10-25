@@ -1,4 +1,4 @@
-module PseudoKiosk 
+module PseudoKiosk
   module Controller
     # code borrowed from Sorcery (https://github.com/Sorcery/sorcery/blob/ae83ac3181aed9696bf78ceabcce96bf735fd7ea/lib/sorcery/controller.rb)
     def self.included(klass)
