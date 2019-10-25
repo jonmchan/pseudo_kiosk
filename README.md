@@ -24,11 +24,34 @@ before_action :secure_pseudo_kiosk
 
 Create an initializer to configure pseudo_kiosk in `config/initializers/pseudo_kiosk.rb`:
 
+The unlock mechanism can be a simple unlock string such as:
 ```
 PseudoKiosk::Config.configure! do |config|
   config.unlock_mechanism = "abc"
 end
 ```
+
+Or it can be a lambda function:
+```
+PseudoKiosk::Config.configure! do |config|
+  config.unlock_mechanism =  ->(context, param) {
+    # TODO - i haven't implemented this functionality yet.
+  } 
+end
+```
+
+
+
+If you wish to override the default Copy the view 
+
+### Core Functions
+
+You can call any of these functions to go in and out of kiosk mode (refer to [code documentation](https://github.com/jonmchan/pseudo_kiosk/blob/master/lib/pseudo_kiosk/controller.rb)) 
+
+* pseudo_kiosk_start(url_whitelist, unauthorized_endpoint_redirect_url)
+* pseudo_kiosk_exit(unlock_redirect_url)
+* clear_pseudo_kiosk_session
+
 
 
 ## Installation

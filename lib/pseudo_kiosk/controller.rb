@@ -16,25 +16,29 @@ module PseudoKiosk
       def secure_pseudo_kiosk
         #  this needs to go to the unlock screen
         if session[:pseudo_kiosk_enabled]
-          whitelist = Array.new(session[:pseudo_kiosk_whitelist])
+          whitelist = session[:pseudo_kiosk_whitelist].is_a?(Array) ? session[:pseudo_kiosk_whitelist] : [ session[:pseudo_kiosk_whitelist] ]
+
 
           # had difficulty getting the paths. If we can ever fix it, it would 
           # make the next line of code prettier.
-          whitelist += [ PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path, PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_process_submit_path ]
+          whitelist += [ 
+            PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path, 
+            PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_process_submit_path
+          ]
 
           whitelist.each do |allowed_url| 
             if allowed_url.is_a? Regexp
-              return if allowed_url =~ request.env['PATH_INFO']
+              return if allowed_url =~ request.env['REQUEST_PATH']
             else
-              return if allowed_url == request.env['PATH_INFO']
+              return if allowed_url == request.env['REQUEST_PATH']
             end
           end
 
           # need to either redirect to unauthorized_endpoint_redirect_url or allow user to break out
           if session[:pseudo_kiosk_unauthorized_endpoint_redirect_url].nil?
-            session[:pseudo_kiosk_unlock_redirect_url] = request.env['PATH_INFO']
+            session[:pseudo_kiosk_unlock_redirect_url] = request.env['REQUEST_PATH']
             
-            redirect_to(pseudo_kiosk_engine.routes.url_helpers.authentication_unlock_path)
+            redirect_to(pseudo_kiosk_engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path)
           else
             redirect_to(session[:pseudo_kiosk_unauthorized_endpoint_redirect_url])
           end
@@ -68,8 +72,9 @@ module PseudoKiosk
         # the session to be given back to the privileged user and
         # for no further operations to be done in the whitelist area
         session.delete(:pseudo_kiosk_whitelist)
+        session.delete(:pseudo_kiosk_unauthorized_endpoint_redirect_url)
 
-        redirect_to(pseudo_kiosk_engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path)
+        redirect_to(PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path)
       end
 
       # clear all pseudo_kiosk session variables; this is an internal function

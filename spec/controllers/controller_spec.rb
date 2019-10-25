@@ -14,35 +14,90 @@ describe TestWorkFlowController, type: :controller do
   end
 
   describe '#secure_pseudo_kiosk' do
-    ## TODO: Complete me
     context 'when pseudo_kiosk is enabled' do
-      before do
-        get :pseudo_kiosk_start_action
-      end
       context 'when in url_whitelist' do
+        before do
+          get :pseudo_kiosk_start_action, params: { url_whitelist: ['//test_work_flow/pseudo_kiosk.*/'] }
+        end
         it 'allows endpoint to be loaded' do
+          get :pseudo_kiosk_start_action
 
+          expect(response.status).to eql(200)
         end
       end
       context 'when url is not in whitelist' do
         context 'when unauthorized_endpoint_redirect_url is set' do
-          it 'redirects to unauthorized_endpoint_redirect_url' do
+          before do
+            session[:pseudo_kiosk_enabled] = true
+            session[:pseudo_kiosk_whitelist] = /\/test_work_flow\/pseudo_kiosk.*/
+            session[:pseudo_kiosk_unauthorized_endpoint_redirect_url] = test_work_flow_start_step2_unprivilege_path
 
+            get :start_step1_privilege
+          end
+          it 'redirects to unauthorized_endpoint_redirect_url' do
+            expect(response).to redirect_to(test_work_flow_start_step2_unprivilege_path)
           end
           it 'does not change unauthorized_endpoint_redirect_url in session' do
-            #session[:pseudo_kiosk_unauthorized_endpoint_redirect_url] = unauthorized_endpoint_redirect_url
+            expect(session[:pseudo_kiosk_unauthorized_endpoint_redirect_url]).to eql(test_work_flow_start_step2_unprivilege_path)
+          end
+
+          it 'does not set the pseudo_kiosk_unlock_redirect_url' do
+            expect(session[:pseudo_kiosk_unlock_redirect_url]).to be_nil
           end
         end
         context 'when unauthorized_endpoint_redirect_url is nil' do
+          before do
+            session[:pseudo_kiosk_enabled] = true
+            session[:pseudo_kiosk_whitelist] = /\/test_work_flow\/pseudo_kiosk.*/
+            session[:pseudo_kiosk_unauthorized_endpoint_redirect_url] = nil
+
+            get :start_step1_privilege
+          end
+          it 'redirects to unauthorized_endpoint_redirect_url' do
+            expect(response).to redirect_to(PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path)
+          end
+          it 'does not change unauthorized_endpoint_redirect_url in session' do
+            expect(session[:pseudo_kiosk_unauthorized_endpoint_redirect_url]).to be_nil
+          end
+
+          it 'does sets the pseudo_kiosk_unlock_redirect_url' do
+            expect(session[:pseudo_kiosk_unlock_redirect_url]).to eql(test_work_flow_start_step1_privilege_path)
+          end
         end
       end
     end
     context 'when pseudo_kiosk is disabled' do
-      it 'allows any endpoint to be hit' do
+      # can only test 1 single endpoint here because of controller spec limitation,
+      # the expanded tests will be in the request spec.
 
+      before do
+        session[:pseudo_kiosk_enabled] = nil
+
+        get :start_step3_privilege
+      end
+
+      it "allows endpoint to be hit" do
+        expect(response.status).to eql(200)
       end
     end
 
+      # endpoints = { 
+      #   test_work_flow_start_step1_privilege_path => true,
+      #   test_work_flow_complete_step1_privilege_path => true,
+      #   test_work_flow_start_step2_unprivilege_path => true,
+      #   test_work_flow_complete_step2_privilege_path => true,
+      #   test_work_flow_start_step3_privilege_path => true,
+      #   test_work_flow_complete_step3_privilege_path => true,
+      #  }
+      # endpoints.each do |endpoint, opened_endpoint|
+      #   if opened_endpoint
+      #   else
+      #   end
+      # end
+
+    # check request spec folder for whitelist tests;
+    # need to utilize ability to simulate multiple http requests
+    # describe 'whitelist tests' do end
     describe 'whitelist tests' do
       context 'single string' do
 
