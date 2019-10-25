@@ -1,14 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe PseudoKiosk::AuthenticationController, type: :controller do
-  routes { PseudoKiosk::Engine.routes }
-
-  pending 
+  routes { PseudoKiosk::Engine.routes } 
 
   describe "GET #unlock" do
-    it "returns http success" do
-      get :unlock, params: {}
-      expect(response).to have_http_status(:success)
+    context 'when pseudo_kiosk is enabled' do
+      before do
+        session[:pseudo_kiosk_enabled] = true
+        session[:pseudo_kiosk_whitelist] = nil
+        session[:pseudo_kiosk_unauthorized_endpoint_redirect_url] = nil
+      end
+      it "returns http success" do
+        get :unlock, params: {}
+        expect(response).to have_http_status(:success)
+      end
+    end
+    context 'when pseudo_kiosk is disabled' do
+      it "returns http success" do
+        get :unlock, params: {}
+        expect(response).to have_http_status(:success)
+      end
     end
   end
 

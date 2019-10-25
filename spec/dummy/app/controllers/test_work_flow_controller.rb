@@ -1,15 +1,20 @@
 class TestWorkFlowController < ApplicationController
   def pseudo_kiosk_start_action
-    if params[:url_whitelist].is_a? Array
-      params[:url_whitelist].map! do |url|
+    whitelist = params[:url_whitelist]
+    if whitelist.is_a? Array
+      whitelist.map! do |url|
         if regex = url.match(/^\/(.*)\/$/)&.[](1)
           /#{regex}/
         else
           url
         end
       end
+    else
+      if regex = whitelist&.match(/^\/(.*)\/$/)&.[](1)
+        whitelist = /#{regex}/
+      end
     end
-    pseudo_kiosk_start(params[:url_whitelist], params[:unauthorized_endpoint_redirect_url])
+    pseudo_kiosk_start(whitelist, params[:unauthorized_endpoint_redirect_url])
     render json: "OK"
   end
 
@@ -51,7 +56,9 @@ class TestWorkFlowController < ApplicationController
   end
 
   def complete_step3_privilege
-    if params[:success] == "true"
+    if params[:test] == "true"
+      render json: 'OK'
+    elsif params[:success] == "true"
       redirect_to test_work_flow_start_step3_privilege_path
     else
       redirect_to test_work_flow_start_step3_privilege_path(missing_param: "true")

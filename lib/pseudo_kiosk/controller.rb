@@ -15,28 +15,24 @@ module PseudoKiosk
       # will not allowed to be accessed
       def secure_pseudo_kiosk
         #  this needs to go to the unlock screen
+        # binding.pry if request.path_info == test_work_flow_complete_step3_privilege_path
         if session[:pseudo_kiosk_enabled]
-          whitelist = session[:pseudo_kiosk_whitelist].is_a?(Array) ? session[:pseudo_kiosk_whitelist] : [ session[:pseudo_kiosk_whitelist] ]
+          whitelist = session[:pseudo_kiosk_whitelist].is_a?(Array) ? session[:pseudo_kiosk_whitelist] : [session[:pseudo_kiosk_whitelist]]
 
-
-          # had difficulty getting the paths. If we can ever fix it, it would 
-          # make the next line of code prettier.
-          whitelist += [ 
-            PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path, 
-            PseudoKiosk::Engine.routes.url_helpers.pseudo_kiosk_authentication_process_submit_path
-          ]
-
-          whitelist.each do |allowed_url| 
+          return if session[:pseudo_kiosk_unauthorized_endpoint_redirect_url].nil? && (params['controller'] == 'pseudo_kiosk/authentication')
+          whitelist.each do |allowed_url|
             if allowed_url.is_a? Regexp
-              return if allowed_url =~ request.env['REQUEST_PATH']
+              return if allowed_url =~ request.path_info
+            elsif allowed_url.start_with? "(?-mix:"
+              return if Regexp.new(allowed_url) =~ request.path_info
             else
-              return if allowed_url == request.env['REQUEST_PATH']
+              return if allowed_url == request.path_info
             end
           end
 
           # need to either redirect to unauthorized_endpoint_redirect_url or allow user to break out
           if session[:pseudo_kiosk_unauthorized_endpoint_redirect_url].nil?
-            session[:pseudo_kiosk_unlock_redirect_url] = request.env['REQUEST_PATH']
+            session[:pseudo_kiosk_unlock_redirect_url] = request.path_info
             
             redirect_to(pseudo_kiosk_engine.routes.url_helpers.pseudo_kiosk_authentication_unlock_path)
           else
