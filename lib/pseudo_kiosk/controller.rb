@@ -21,6 +21,7 @@ module PseudoKiosk
 
           return if session[:pseudo_kiosk_unauthorized_endpoint_redirect_url].nil? && (params['controller'] == 'pseudo_kiosk/authentication')
           whitelist.each do |allowed_url|
+            next if allowed_url.nil?
             if allowed_url.is_a? Regexp
               return if allowed_url =~ request.path_info
             elsif allowed_url.start_with? "(?-mix:"

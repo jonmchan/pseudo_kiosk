@@ -26,16 +26,16 @@ Create an initializer to configure pseudo_kiosk in `config/initializers/pseudo_k
 
 The unlock mechanism can be a simple unlock string such as:
 ```
-PseudoKiosk::Config.configure! do |config|
+PseudoKiosk::Config.configure do |config|
   config.unlock_mechanism = "abc"
 end
 ```
 
 Or it can be a lambda function:
 ```
-PseudoKiosk::Config.configure! do |config|
-  config.unlock_mechanism =  ->(context, param) {
-    # TODO - i haven't implemented this functionality yet.
+PseudoKiosk::Config.configure do |config|
+  config.unlock_mechanism =  ->(controller_context, params) {
+    return Digest::SHA256.base64digest(params[:passcode]) == controller_context.current_user.passcode_hash ? true : false
   } 
 end
 ```

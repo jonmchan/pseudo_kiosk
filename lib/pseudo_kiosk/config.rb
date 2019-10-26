@@ -32,6 +32,7 @@ module PseudoKiosk
 
       def configure(&blk)
         @configure_blk = blk
+        @configure_blk.call(self) 
       end
 
       def configure!

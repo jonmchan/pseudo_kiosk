@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
 <title>Operator Unlock</title>
 
 <meta name="viewport" content="width=device-width">
@@ -120,6 +123,13 @@ h2 {
   letter-spacing: 1.25px;
 }
 
+input[type=submit] {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.25px;
+  margin: .65em;
+}
+
 .center-xy {
   position: absolute;
   top: 50%;
@@ -127,13 +137,33 @@ h2 {
   transform: translate(-50%, -50%);
 }
 
+<% if params[:failed] %>
 #pass_window {
+  display: initial;
+}
+#invalid {
+  display: initial;
+  font-size: 0.55rem;
+  color: red;
+  text-transform: uppercase;
+  letter-spacing: 1.25px;
+}
+
+#explanation_window {
+  display: none;
+}
+<% else %>
+#pass_window {
+  display: none;
+}
+#invalid {
   display: none;
 }
 
 #explanation_window {
   display: initial;
 }
+<% end %>
 </style>
 <script>
   window.console = window.console || function(t) {};
@@ -154,10 +184,11 @@ h2 {
     <input type="range" value="0" class="pullee" />
 </div>
 <% # This is bad... I am having a problem using the named routes within the rails engine plugin %>
-<%= form_tag 'process_submit' do %>
+<%= form_tag 'process_submit', authenticity_token: true do %>
 <div id="pass_window" class="center-xy">
-    <div>Passcode:</div><br>
-    <div><input type="password" name="passcode" style="text-align: center;"></div><br>
+    <h1>Passcode:</h1>
+    <div id="invalid">Invalid Passcode! Please try again.</div>
+    <div><input type="password" name="passcode" style="text-align: center;"></div>
     <div><input type="submit"></div>
 <% end %>
 </div>
