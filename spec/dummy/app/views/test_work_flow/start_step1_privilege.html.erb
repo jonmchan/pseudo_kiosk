@@ -1,0 +1,60 @@
+<h1>TestWorkFlow - Step 1 Privileged Mode</h1>
+
+<p>Pretend we have some form that the privileged user is filling out.</p>
+
+<% if params[:missing_param] %>
+<p style="color: red">Failed validation or fields are missing or something</p>
+<% end %>
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Fake Point of Sales System</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Item">Item</label>  
+  <div class="col-md-4">
+  <input id="Item" name="Item" type="text" placeholder="fuzzy sweater" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="quantity">Quantity</label>
+  <div class="col-md-4">
+    <select id="quantity" name="quantity" class="form-control">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="price">Price</label>  
+  <div class="col-md-4">
+  <input id="price" name="price" type="text" placeholder="$" class="form-control input-md">
+    
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+<div style="display:inline">
+
+<form action="<%= test_work_flow_complete_step1_privilege_path %>" style="float: left; padding: 1px;">
+<input type="submit" style="display:inline" value="Fail">
+</form>
+<form action="<%= test_work_flow_complete_step1_privilege_path %>" style="float: left; padding: 1px;">
+<input type="hidden" name="success" value="true">
+<input type="submit" style="display:inline" value="Succeed">
+</form>
+
+
+</div>

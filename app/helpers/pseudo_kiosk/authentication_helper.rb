@@ -1,0 +1,2 @@
+module PseudoKiosk::AuthenticationHelper
+end

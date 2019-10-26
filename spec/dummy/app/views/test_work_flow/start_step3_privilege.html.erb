@@ -1,0 +1,52 @@
+<h1>TestWorkFlow - Step 3 Privileged Mode</h1>
+<p>Privileged user mode. All of the links should work. Note - if you jump to Step 2 from here, kiosk mode won't be on anymore and all the links on that page will work.</p>
+
+
+
+<button onclick="window.location.href = 'start_step1_privilege';">Step 1</button>
+<button onclick="window.location.href = 'start_step2_unprivilege';">Step 2</button>
+<button onclick="window.location.href = 'start_step3_privilege';">Step 3</button>
+<br>
+<br>
+
+<% if params[:missing_param] %>
+<p style="color: red">Failed validation or fields are missing or something</p>
+<% end %>
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Fake Return to Operator Screen</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Item">More Data</label>  
+  <div class="col-md-4">
+  <input id="Item" name="Item" type="text" placeholder="More Data Collected" class="form-control input-md">
+    
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Item">More Results</label>  
+  <div class="col-md-4">
+  <input id="Item" name="Item" type="text" placeholder="Leads To More Results!" class="form-control input-md">
+    
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+<div style="display:inline">
+
+<form action="<%= test_work_flow_complete_step3_privilege_path %>" style="float: left; padding: 1px;">
+<input type="submit" style="display:inline" value="Fail">
+</form>
+<form action="<%= test_work_flow_complete_step3_privilege_path %>" style="float: left; padding: 1px;">
+<input type="hidden" name="success" value="true">
+<input type="submit" style="display:inline" value="Succeed">
+</form>
+
+
+</div>

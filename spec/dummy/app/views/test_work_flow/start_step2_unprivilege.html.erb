@@ -1,0 +1,51 @@
+<h1>TestWorkFlow - Step 2 Unprivileged Mode</h1>
+<p>Unprivileged user mode. All of the following links will redirect to this work.</p>
+
+
+
+<button onclick="window.location.href = 'start_step1_privilege';">Step 1</button>
+<button onclick="window.location.href = 'start_step3_privilege';">Step 3</button>
+<br>
+<br>
+
+<% if params[:missing_param] %>
+<p style="color: red">Failed validation or fields are missing or something</p>
+<% end %>
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Fake Rewards User Input</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Item">Email</label>  
+  <div class="col-md-4">
+  <input id="Item" name="Item" type="text" placeholder="Your Email Address" class="form-control input-md">
+    
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Item">Phone</label>  
+  <div class="col-md-4">
+  <input id="Item" name="Item" type="text" placeholder="Your Phone Number" class="form-control input-md">
+    
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+<div style="display:inline">
+
+<form action="<%= test_work_flow_complete_step2_unprivilege_path %>" style="float: left; padding: 1px;">
+<input type="submit" style="display:inline" value="Fail">
+</form>
+<form action="<%= test_work_flow_complete_step2_unprivilege_path %>" style="float: left; padding: 1px;">
+<input type="hidden" name="success" value="true">
+<input type="submit" style="display:inline" value="Succeed">
+</form>
+
+
+</div>
