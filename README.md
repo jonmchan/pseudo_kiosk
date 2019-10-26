@@ -2,7 +2,7 @@
 
 ![Build Status](https://travis-ci.org/jonmchan/pseudo_kiosk.svg?branch=master)
 
-PseudoKiosk - a play on words on the unix sudo command allowing a privileged session to be utilized by another party temporarily. Instead of granting elevated privileges, PseudoKiosk gives the ability to limit access to the application during workflows which involve physically passing a device with elevated permissions to an unknown or untrusted user. PseudoKiosk provides the ability to lock down a rails application to only a specified whitelist of endpoints during a session. The kiosk can be quickly and easily unlocked by passing a kiosk passcode.
+PseudoKiosk is a play on words on the unix sudo command and the idea to provide a fake kiosk terminal. Instead of granting elevated privileges, PseudoKiosk gives the ability to limit access to the application during workflows which involve physically passing a device with elevated permissions to an unknown or untrusted user. PseudoKiosk provides the ability to lock down a rails application to only a specified whitelist of endpoints during a session. The kiosk can be quickly and easily unlocked by passing a kiosk passcode.
 
 The motivating user scenario for this is a mobile, tablet, or kiosk device where data input must be received from an untrusted user while the device is mainly used by a privileged user (such as a cashier in a POS system). With PseudoKiosk, the device can be safely passed to the end customer to input his/her own information without fear of accidently or malicously utilizing the main user's elevated privileges. 
 
@@ -73,7 +73,7 @@ PseudoKiosk::Config.configure do |config|
 end
 ```
 
-The lambda function receives an instance of the controller which you can used to call functions such as current_user or session and all the params passed from the authentication unlock action. By default, the only parameter passed is `passcode`.
+The lambda function receives an instance of the controller which can be used to call functions such as current_user or session and all the params passed from the authentication unlock action. By default, the only parameter passed is `passcode`.
 
 
 If you wish to override the default unlock screen, copy the [built in view](https://github.com/jonmchan/pseudo_kiosk/blob/master/app/views/pseudo_kiosk/authentication/unlock.html.erb) and put it in `app/views/pseudo_kiosk/authentication/unlock.html.erb`. Edit it to your heart's content.
