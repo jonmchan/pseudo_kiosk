@@ -1,5 +1,4 @@
 class PseudoKiosk::AuthenticationController < ApplicationController
-  skip_before_action :verify_authenticity_token
   def unlock
     unless session[:pseudo_kiosk_enabled]
       redirect_back(fallback_location: root_path) 
