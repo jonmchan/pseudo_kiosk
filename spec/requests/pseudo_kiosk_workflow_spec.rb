@@ -38,6 +38,7 @@ describe 'Integration - Privileged/Unprivileged Workflow Scenario', type: :reque
       test_work_flow_complete_step2_unprivilege_path => true,
       test_work_flow_start_step3_privilege_path => true,
       test_work_flow_complete_step3_privilege_path => true,
+      test_work_flow_complete_step3_privilege_path(success: 'true') => true,
     }
   }
 

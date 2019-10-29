@@ -23,19 +23,41 @@ RSpec.describe PseudoKiosk::AuthenticationController, type: :controller do
     end
   end
 
-  describe "GET #process_submit" do
+  describe "POST #process_submit" do
     before do
       session[:pseudo_kiosk_enabled] = true
       session[:pseudo_kiosk_whitelist] = nil
       session[:pseudo_kiosk_unauthorized_endpoint_redirect_url] = nil
       session[:pseudo_kiosk_unlock_redirect_url] = '/success_unlock'
     end
+
+    context 'when pseudo_kiosk is not enabled' do
+      before do
+        session[:pseudo_kiosk_enabled] = nil
+      end
+
+      it 'falls back to the root_url when there is no back' do 
+        post :process_submit
+        expect(response).to redirect_to('/')
+      end
+    end
+
     context 'when config.unlock_mechanism is unset' do
       before do
         PseudoKiosk::Config.reset!
       end
       it 'raises an exception' do
         expect { post :process_submit, params: { passphrase: '123' } }.to raise_exception('PseudoKiosk::Config.unlock_mechanism is missing!')
+      end
+    end
+
+    context 'when config.unlock_mechanism is unexpected type' do
+      before do
+        PseudoKiosk::Config.reset!
+        PseudoKiosk::Config.unlock_mechanism = 123
+      end
+      it 'raises an exception' do
+        expect { post :process_submit, params: { passphrase: '123' } }.to raise_exception('No clue how to use an PseudoKiosk::Config.unlock_mechanism that is a Integer!')
       end
     end
 
