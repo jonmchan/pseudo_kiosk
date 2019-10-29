@@ -20,19 +20,9 @@ module PseudoKiosk
         end
       end
 
-      def update!
-        @defaults.each do |k, v|
-          instance_variable_set(k, v) unless instance_variable_defined?(k)
-        end
-      end
-
-      def user_config(&blk)
-        block_given? ? @user_config = blk : @user_config
-      end
-
       def configure(&blk)
         @configure_blk = blk
-        @configure_blk.call(self) 
+        configure!
       end
 
       def configure!
