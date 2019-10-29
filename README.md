@@ -1,6 +1,6 @@
 # PseudoKiosk
 
-![Build Status](https://travis-ci.org/jonmchan/pseudo_kiosk.svg?branch=master)
+[![Build Status](https://travis-ci.org/jonmchan/pseudo_kiosk.svg?branch=master)](https://travis-ci.org/jonmchan/pseudo_kiosk/)
 
 PseudoKiosk is a play on words on the unix sudo command and the idea to provide a fake kiosk terminal. Instead of granting elevated privileges, PseudoKiosk gives the ability to limit access to the application during workflows which involve physically passing a device with elevated permissions to an unknown or untrusted user. PseudoKiosk provides the ability to lock down a rails application to only a specified whitelist of endpoints during a session. The kiosk can be quickly and easily unlocked by passing a kiosk passcode.
 
