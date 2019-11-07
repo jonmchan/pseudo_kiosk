@@ -1,4 +1,148 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+html {
+  font-size: 32px;
+  text-align: center;
+}
+.explanation-window__pullee {
+  width: 10rem;
+  appearance: none;
+}
+.explanation-window__pullee:active::-webkit-slider-thumb {
+  appearance: none;
+  transform: scale(1.1);
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+}
+.explanation-window__pullee:active::-moz-range-thumb {
+  border: 0;
+  transform: scale(1.1);
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+}
+.explanation-window__pullee:active::-ms-thumb {
+  transform: scale(1.1);
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+}
+.explanation-window__pullee:focus {
+  outline: none;
+}
+.explanation-window__pullee::-webkit-slider-thumb {
+  appearance: none;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: #5990DD;
+  transform-origin: 50% 50%;
+  transform: scale(1);
+  transition: transform ease-out 100ms;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+.explanation-window__pullee::-moz-range-thumb {
+  border: 0;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: #5990DD;
+  transform-origin: 50% 50%;
+  transform: scale(1);
+  transition: transform ease-out 100ms;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+.explanation-window__pullee::-ms-thumb {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: #5990DD;
+  transform-origin: 50% 50%;
+  transform: scale(1);
+  transition: transform ease-out 100ms;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+.explanation-window__pullee::-webkit-slider-runnable-track {
+  height: 1rem;
+  padding: .25rem;
+  box-sizing: content-box;
+  border-radius: 1rem;
+  background-color: #DDE0E3;
+}
+.explanation-window__pullee::-moz-range-track {
+  height: 1rem;
+  padding: .25rem;
+  box-sizing: content-box;
+  border-radius: 1rem;
+  background-color: #DDE0E3;
+}
+.explanation-window__pullee::-moz-focus-outer {
+  border: 0;
+}
+.explanation-window__pullee::-ms-track {
+  border: 0;
+  height: 1rem;
+  padding: .25rem;
+  box-sizing: content-box;
+  border-radius: 1rem;
+  background-color: #DDE0E3;
+  color: transparent;
+}
+.explanation-window__pullee::-ms-fill-lower,
+.explanation-window__pullee::-ms-fill-upper {
+  background-color: transparent;
+}
+.explanation-window__pullee::-ms-tooltip {
+  display: none;
+}
+.explanation-window__header,
+.explanation-window__unlock_instruction,
+.pass-window__passcode {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.25px;
+}
+.explanation-window__subheader {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1.25px;
+}
+.pass-window__input {
+  text-align: center;
+}
+.pass-window__submit {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.25px;
+  margin: .65em;
+}
+.unlock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.unlock .unlock__pass-window {
+  display: none;
+}
+.unlock .pass-window__invalid {
+  display: none;
+}
+.unlock .unlock__explanation-window {
+  display: initial;
+}
+.unlock--failed .unlock__explanation-window {
+  display: none;
+}
+.unlock--failed .unlock__pass-window {
+  display: initial;
+}
+.unlock--failed .pass-window__invalid {
+  display: initial;
+  font-size: 0.55rem;
+  color: red;
+  text-transform: uppercase;
+  letter-spacing: 1.25px;
+}
