@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pseudo_kiosk (0.1.1)
+    pseudo_kiosk (0.1.2)
       rails (~> 5.2.3)
 
 GEM
